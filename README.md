@@ -1,7 +1,7 @@
 # Leaderboard
 
 > This is a solo project being built in our second module of our curriculum at microverse. its a Leaderboard application were you are able to add your name and score to the leaderboard with the help of an API your details can be stored and retrieved correctly
-![screenshot](images/Screen-Shot.PNG)
+![screenshot](images/Screen-Shot-1.PNG)
 Our goal here is to Build a Leaderboard application where you can add your name and score to it with the help of an API. click [here]( https://abenezer-tilahun.github.io/Leaderboard/) to see deployed live version
 
 ### Features implemented so far are:

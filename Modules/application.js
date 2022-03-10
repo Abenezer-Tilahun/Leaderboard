@@ -2,14 +2,21 @@ import Featchscore from './Featchscore.js';
 
 class Application {
   constructor() {
-    this.gateWay = new Featchscore();
-    this.gateWay.getID('Seed');
-
     this.inputs = document.querySelectorAll('.userdetails');
     this.success_message = document.querySelector('.success-message');
     this.form = document.querySelector('.data-form');
     this.tableList = document.querySelector('.table-content');
     this.refreshBtn = document.querySelector('.f5');
+    this.resetBtn = document.querySelector('.f4');
+    this.localStorageStringInstance = 'app_config';
+
+    this.gateWay = new Featchscore();
+    if (this.onLoad() != null) {
+      this.gateWay.id = this.onLoad();
+      this.refreshList();
+    } else {
+      this.createNewToken();
+    }
   }
 
     initApp = () => {
@@ -24,6 +31,24 @@ class Application {
         event.currentTarget.ref.refreshList();
       });
       this.refreshBtn.ref = this;
+
+      this.resetBtn.addEventListener('click', (event) => {
+        event.currentTarget.ref.createNewToken();
+      });
+      this.resetBtn.ref = this;
+    }
+
+    createNewToken = () => {
+      const res = this.gateWay.getID('Seed');
+      res.then((data) => {
+        const stringResult = data.result;
+        this.gateWay.id = stringResult.substring(13, 34);
+        this.onSave(this.gateWay.id);
+        this.refreshList();
+      })
+        .catch((error) => {
+          throw error;
+        });
     }
 
     addUserScore = () => {
@@ -61,6 +86,12 @@ class Application {
           throw error;
         });
     }
+
+    onSave = (token) => {
+      localStorage.setItem(this.localStorageStringInstance, token);
+    }
+
+    onLoad = () => localStorage.getItem(this.localStorageStringInstance);
 }
 
 export default Application;
